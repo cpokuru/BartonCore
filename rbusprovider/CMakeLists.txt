@@ -18,6 +18,14 @@ message(STATUS "rbus lib    : ${RBUS_LIB}")
 message(STATUS "rbuscore lib: ${RBUSCORE_LIB}")
 message(STATUS "rbus include: ${RBUS_INCLUDE_DIR}")
 
+# ---- rtmessage (needed by rbuscore.h) ---------------------------------
+find_path(RTMESSAGE_INCLUDE_DIR NAMES rtMessageHeader.h
+          HINTS /usr/include/rtmessage /usr/local/include/rtmessage)
+if(NOT RTMESSAGE_INCLUDE_DIR)
+    message(FATAL_ERROR "rtMessageHeader.h not found")
+endif()
+message(STATUS "rtmessage include: ${RTMESSAGE_INCLUDE_DIR}")
+
 # ---- BartonCore -------------------------------------------------------
 find_library(BARTONCORE_LIB NAMES BartonCore HINTS /usr/lib /usr/local/lib)
 find_path(BARTONCORE_INCLUDE_DIR NAMES barton-core-client.h
@@ -31,7 +39,7 @@ endif()
 message(STATUS "BartonCore lib    : ${BARTONCORE_LIB}")
 message(STATUS "BartonCore include: ${BARTONCORE_INCLUDE_DIR}")
 
-# ---- GLib + GObject (both needed) ------------------------------------
+# ---- GLib + GObject ---------------------------------------------------
 pkg_check_modules(GLIB    REQUIRED glib-2.0)
 pkg_check_modules(GOBJECT REQUIRED gobject-2.0)
 
@@ -46,6 +54,7 @@ target_include_directories(barton-rbus-provider PRIVATE
     src
     ${BARTONCORE_INCLUDE_DIR}
     ${RBUS_INCLUDE_DIR}
+    ${RTMESSAGE_INCLUDE_DIR}        # <-- fixes rtMessageHeader.h
     ${GLIB_INCLUDE_DIRS}
     ${GOBJECT_INCLUDE_DIRS}
 )
