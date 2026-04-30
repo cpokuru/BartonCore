@@ -713,7 +713,11 @@ static void onDeviceAdded(BCoreClient *src, BCoreDeviceAddedEvent *event, gpoint
     rbusValue_Release(vUri);
     rbusValue_Release(vClass);
     rbusValue_Release(vVer);
-    rbus_publishEvent(s_ctx->handle, BARTON_RBUS_EVT_DEVICE_ADDED, data);
+    rbusEvent_t ev_barton_rbus_evt_device_added = {0};
+    ev_barton_rbus_evt_device_added.name = BARTON_RBUS_EVT_DEVICE_ADDED;
+    ev_barton_rbus_evt_device_added.data = data;
+    ev_barton_rbus_evt_device_added.type = RBUS_EVENT_GENERAL;
+    rbusEvent_Publish(s_ctx->handle, &ev_barton_rbus_evt_device_added);
     rbusObject_Release(data);
 }
 
@@ -741,7 +745,11 @@ static void onDeviceRemoved(BCoreClient *src, BCoreDeviceRemovedEvent *event, gp
     rbusObject_SetValue(data, "deviceClass", vClass);
     rbusValue_Release(vId);
     rbusValue_Release(vClass);
-    rbus_publishEvent(s_ctx->handle, BARTON_RBUS_EVT_DEVICE_REMOVED, data);
+    rbusEvent_t ev_barton_rbus_evt_device_removed = {0};
+    ev_barton_rbus_evt_device_removed.name = BARTON_RBUS_EVT_DEVICE_REMOVED;
+    ev_barton_rbus_evt_device_removed.data = data;
+    ev_barton_rbus_evt_device_removed.type = RBUS_EVENT_GENERAL;
+    rbusEvent_Publish(s_ctx->handle, &ev_barton_rbus_evt_device_removed);
     rbusObject_Release(data);
 }
 
@@ -773,7 +781,11 @@ static void onResourceUpdated(BCoreClient *src, BCoreResourceUpdatedEvent *event
     rbusObject_SetValue(data, "value", vVal);
     rbusValue_Release(vUri);
     rbusValue_Release(vVal);
-    rbus_publishEvent(s_ctx->handle, BARTON_RBUS_EVT_RESOURCE_UPDATED, data);
+    rbusEvent_t ev_barton_rbus_evt_resource_updated = {0};
+    ev_barton_rbus_evt_resource_updated.name = BARTON_RBUS_EVT_RESOURCE_UPDATED;
+    ev_barton_rbus_evt_resource_updated.data = data;
+    ev_barton_rbus_evt_resource_updated.type = RBUS_EVENT_GENERAL;
+    rbusEvent_Publish(s_ctx->handle, &ev_barton_rbus_evt_resource_updated);
     rbusObject_Release(data);
 }
 
@@ -784,7 +796,11 @@ static void onDiscoveryStarted(BCoreClient *src, BCoreDiscoveryStartedEvent *eve
     printf("[IoT] DiscoveryStarted\n");
     rbusObject_t data;
     rbusObject_Init(&data, NULL);
-    rbus_publishEvent(s_ctx->handle, BARTON_RBUS_EVT_DISC_STARTED, data);
+    rbusEvent_t ev_barton_rbus_evt_disc_started = {0};
+    ev_barton_rbus_evt_disc_started.name = BARTON_RBUS_EVT_DISC_STARTED;
+    ev_barton_rbus_evt_disc_started.data = data;
+    ev_barton_rbus_evt_disc_started.type = RBUS_EVENT_GENERAL;
+    rbusEvent_Publish(s_ctx->handle, &ev_barton_rbus_evt_disc_started);
     rbusObject_Release(data);
 }
 
@@ -795,7 +811,11 @@ static void onDiscoveryStopped(BCoreClient *src, BCoreDiscoveryStoppedEvent *eve
     printf("[IoT] DiscoveryStopped\n");
     rbusObject_t data;
     rbusObject_Init(&data, NULL);
-    rbus_publishEvent(s_ctx->handle, BARTON_RBUS_EVT_DISC_STOPPED, data);
+    rbusEvent_t ev_barton_rbus_evt_disc_stopped = {0};
+    ev_barton_rbus_evt_disc_stopped.name = BARTON_RBUS_EVT_DISC_STOPPED;
+    ev_barton_rbus_evt_disc_stopped.data = data;
+    ev_barton_rbus_evt_disc_stopped.type = RBUS_EVENT_GENERAL;
+    rbusEvent_Publish(s_ctx->handle, &ev_barton_rbus_evt_disc_stopped);
     rbusObject_Release(data);
 }
 
